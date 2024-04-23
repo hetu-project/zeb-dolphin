@@ -1,12 +1,15 @@
 import Stat from "./sections/Stat";
 import NodeList from "./sections/NodeList";
 import MessageGraph from "./sections/MessageGraph";
+import { Link} from "react-router-dom";
+
 
 function Home() {
   return (
     <div className=' w-full flex items-center justify-center'>
 
       <div className=' max-w-4xl flex-grow'>
+      <Link to="/ai">ai</Link>
         <div className="text-sm breadcrumb mt-10">
           <ul>
             <li>
