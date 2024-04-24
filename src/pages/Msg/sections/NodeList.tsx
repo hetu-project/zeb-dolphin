@@ -17,7 +17,7 @@ export default function NodeList () {
         </thead>
         <tbody>
           <tr>
-            <th><Link to="/node">1</Link></th>
+            <th><Link to="/msg">1</Link></th>
             <td>Cy Ganderton</td>
             <td>Quality Control Specialist</td>
             <td>Littel, Schaden and Vandervort</td>

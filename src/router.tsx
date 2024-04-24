@@ -1,12 +1,12 @@
-import { createHashRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Layout from './components/Layout/index'
-// import Root, { rootLoader } from "./routes/root";
-// import Team, { teamLoader } from "./routes/team";
 
 import Home from './pages/Home/Index'
 import Ai from './pages/Ai/Index'
+import Node from './pages/Node/Index'
+import Msg from './pages/Msg/Index'
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
@@ -18,6 +18,14 @@ const router = createHashRouter([
       {
         path: "/ai",
         element: <Ai />,
+      },
+      {
+        path: "/node",
+        element: <Node />,
+      },
+      {
+        path: "/msg",
+        element: <Msg />,
       },
     ],
   },
