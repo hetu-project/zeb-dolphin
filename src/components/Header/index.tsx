@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Header() {
   return (
     <div className="navbar w-full bg-base-100 shadow-md">
@@ -23,8 +25,8 @@ function Header() {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li><a href="/node">Node</a></li>
-          <li><a href="/msg">Msg</a></li>
+          <li><Link to="/node">Node</Link></li>
+          <li><Link to="/msg">Msg</Link></li>
           <li>
             <details>
               <summary>App</summary>
