@@ -1,5 +1,6 @@
 import NodeList from "./sections/NodeList";
-import MessageGraph from "./sections/MessageGraph";
+// import MessageGraph from "./sections/MessageGraph";
+import GraphMap from "./sections/GraphMap";
 
 
 function Home() {
@@ -63,7 +64,8 @@ function Home() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md'>
-          <MessageGraph></MessageGraph>
+          {/* <MessageGraph></MessageGraph> */}
+          <GraphMap></GraphMap>
         </div>
 
         <div className="text-sm breadcrumb mt-6">
