@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 
 interface Node {
@@ -8,6 +8,8 @@ interface Node {
 
 const EthereumP2PTopology: React.FC = () => {
   const svgRef = useRef<HTMLDivElement>(null);
+  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [randomNumber, setRandomNumber] = useState<number | null>(null);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -38,7 +40,11 @@ const EthereumP2PTopology: React.FC = () => {
     // Create node elements
     const node = svg.selectAll("g")
       .data(nodes)
-      .enter().append("g");
+      .enter().append("g")
+      .on("click", (event, d) => {
+        setSelectedNode(d);
+        setRandomNumber(Math.floor(Math.random() * 1000)); // Generate a random number
+      });
 
     node.append("circle")
       .attr("r", 15) // Increase the radius of the circles
@@ -54,7 +60,7 @@ const EthereumP2PTopology: React.FC = () => {
     const simulation = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id(d => (d as Node).id).distance(100))
       .force("charge", d3.forceManyBody().strength(-200))
-      .force("center", d3.forceCenter(200, 250));
+      .force("center", d3.forceCenter(200, 200));
 
     // Update positions of nodes and links
     simulation.on("tick", () => {
@@ -69,7 +75,14 @@ const EthereumP2PTopology: React.FC = () => {
 
   return (
     <div className='flex justify-center items-center overflow-x-auto'>
-      <svg ref={svgRef} width="1000" height="500"></svg>
+      <svg ref={svgRef} width="800" height="400">
+        {selectedNode && (
+          <g transform={`translate(${(selectedNode as any).x},${(selectedNode as any).y})`}>
+            <text x="200" y="40" fill="black">{selectedNode.name}</text>
+            <text x="200" y="60" fill="black">Random Number: {randomNumber}</text>
+          </g>
+        )}
+      </svg>
     </div>
   );
 };
