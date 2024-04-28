@@ -7,7 +7,7 @@ const NodeList = () => {
   useEffect(() => {
     const fetchNodeList = async () => {
       try {
-        const response = await fetch('/src/http/data.json');
+        const response = await fetch('data.json');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

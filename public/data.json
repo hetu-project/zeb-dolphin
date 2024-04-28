@@ -1,0 +1,146 @@
+{
+  "nodelist": {
+    "nodes": [
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CB",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CC"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CC"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CB",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CB"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CC",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CE",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CF"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CD",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CC"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CE",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CH",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CB"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CF",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CE",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CB"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CG",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CI",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CC"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CH",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CJ"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CI",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CB",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CC"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CJ",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CJ",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CC"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CK",
+        "is_alive": true
+      },
+      {
+        "neighbor_nodes": [
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+          "0x679320A64036b710371374aEdfa59Cff5c16f1CL"
+        ],
+        "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CL",
+        "is_alive": true
+      }
+    ],
+    "total_node_count": 12,
+    "total_message_count": 18
+  },
+  "nodedetail1": {
+    "clock": [
+      {
+        "key": "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+        "value": 3
+      }
+    ],
+    "message_list": [
+      {
+        "message_id": "msg0003",
+        "from_addr": "0xF5cF915C7B16a72f265F2531f87D2f4A3b7F3E29",
+        "to_addr": "0xCd29894dA4825c87277B32Fd6855B72e30489AD9"
+      },
+      {
+        "message_id": "msg0002",
+        "from_addr": "0xF5cF915C7B16a72f265F2531f87D2f4A3b7F3E29",
+        "to_addr": "0xCd29894dA4825c87277B32Fd6855B72e30489AD9"
+      },
+      {
+        "message_id": "msg0001",
+        "from_addr": "0xF5cF915C7B16a72f265F2531f87D2f4A3b7F3E29",
+        "to_addr": "0xCd29894dA4825c87277B32Fd6855B72e30489AD9"
+      }
+    ],
+    "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+    "is_alive": true
+  },
+  "messagedetail": {
+    "clock": [
+      {
+        "key": "0x679320A64036b710371374aEdfa59Cff5c16f1CA",
+        "value": 1
+      }
+    ],
+    "message_id": "msg0001",
+    "event_count": 1,
+    "is_zk": true,
+    "from_addr": "0xF5cF915C7B16a72f265F2531f87D2f4A3b7F3E29",
+    "to_addr": "0xCd29894dA4825c87277B32Fd6855B72e30489AD9",
+    "raw_message": "hello",
+    "signature": "sigasdasdadasdasdasd"
+  }
+}
