@@ -1,6 +1,5 @@
-import NodeList from "./sections/NodeList";
-// import MessageGraph from "./sections/MessageGraph";
 import GraphMap from "./sections/GraphMap";
+import NodeList from "../../http/NodeList"
 
 
 function Home() {
@@ -79,7 +78,7 @@ function Home() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
-          <NodeList></NodeList>
+          <NodeList />
         </div>
       </div>
     </div>
