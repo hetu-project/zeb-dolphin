@@ -1,4 +1,5 @@
-import NodeList from "./sections/NodeList";
+// import NodeList from "./sections/NodeList";
+import NodeDetail from "../../http/NodeDetail"
 
 export default function Node() {
   return (
@@ -58,7 +59,7 @@ export default function Node() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
-          <NodeList></NodeList>
+          <NodeDetail></NodeDetail>
         </div>
       </div>
     </div>
