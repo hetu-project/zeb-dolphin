@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+
+enum ChatType {
+  CHAT_TYPE_MESSAGE = 0;
+}
+
+message ChatMessage {
+  bytes id = 1;
+  uint32 version = 2;
+  ChatType type = 3;
+  bytes public_key = 4;
+  bytes data = 5;
+  bytes signature = 6;
+  bytes from = 7;
+  bytes to = 8;
+  uint64 timestamp = 9;
+}
