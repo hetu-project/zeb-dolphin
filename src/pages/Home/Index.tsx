@@ -1,8 +1,18 @@
 import GraphMap from "./sections/GraphMap";
 import NodeList from "../../http/NodeList"
-
+// import P2PNetworkTopology from "./sections/NodeGraph";
+import useNodeList from '../../http/useNodeList';
+import { useState, useEffect } from "react";
 
 function Home() {
+
+  const { nodeList } = useNodeList();
+  const [data, setData] = useState<any[]>([]);
+
+  useEffect(() => {
+    setData(nodeList?.nodes)
+  }, [nodeList])
+
   return (
     <div className='w-full flex justify-center'>
       <div className='max-w-5xl w-full flex flex-col'>
@@ -65,6 +75,7 @@ function Home() {
         <div className='flex items-center justify-center border-2 m-2 rounded-md'>
           {/* <MessageGraph></MessageGraph> */}
           <GraphMap></GraphMap>
+          {/* <P2PNetworkTopology data={data}></P2PNetworkTopology> */}
         </div>
 
         <div className="text-sm breadcrumb mt-6">

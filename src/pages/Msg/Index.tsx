@@ -1,7 +1,20 @@
-import NodeList from "./sections/NodeList";
+// import NodeList from "./sections/NodeList";
 import MessageGraph from "./sections/MessageGraph";
+import { useParams } from "react-router-dom";
+// import MessageDetail from "../../http/MessageDetail";
+import useMessageDetail from '../../http/MessageDetail';
+
 
 export default function Msg() {
+
+  const { msg_id } = useParams();
+
+  const { msgDetail, isLoading } = useMessageDetail(msg_id);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className='w-full flex justify-center'>
       <div className='max-w-5xl w-full flex flex-col'>
@@ -59,7 +72,7 @@ export default function Msg() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
-          <NodeList></NodeList>
+          {/* <NodeList}></NodeList> */}
         </div>
       </div>
     </div>

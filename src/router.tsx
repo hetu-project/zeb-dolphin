@@ -5,6 +5,8 @@ import Home from './pages/Home/Index'
 import Ai from './pages/Ai/Index'
 import Node from './pages/Node/Index'
 import Msg from './pages/Msg/Index'
+import { Chat } from "./pages/Chat";
+import { Login } from "./pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -20,12 +22,20 @@ const router = createBrowserRouter([
         element: <Ai />,
       },
       {
-        path: "/node",
+        path: "/node/:node_id",
         element: <Node />,
       },
       {
-        path: "/msg",
+        path: "/message/:msg_id",
         element: <Msg />,
+      },
+      {
+        path: 'chat',
+        element: <Chat />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
       },
     ],
   },
