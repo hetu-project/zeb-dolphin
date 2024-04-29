@@ -9,7 +9,6 @@ export default function Msg() {
 
   const { msg_id } = useParams();
 
-  console.log(msg_id)
   const { msgDetail, isLoading } = useMessageDetail(msg_id);
 
   if (isLoading) {
