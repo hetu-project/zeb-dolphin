@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2P Network Topology</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    svg {
+      background-color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    .link {
+      fill: none;
+      stroke: #888;
+      stroke-width: 1px;
+      marker-end: url(#arrow);
+      /* 添加箭头 */
+    }
+
+    .arrow {
+      fill: #888;
+    }
+
+    .node {
+      fill: #44a;
+      stroke: #000;
+      stroke-width: 2px;
+    }
+
+    .node-label {
+      font-size: 12px;
+      text-anchor: middle;
+      fill: black;
+    }
+
+    #node-info {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <svg id="svg"></svg>
+  <div id="node-info"></div>
+
+  <!-- 创建箭头 -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6"
+      orient="auto-start-reverse">
+      <path class="arrow" d="M 0 0 L 10 5 L 0 10 z" />
+    </marker>
+  </defs>
+
+  <script>
+    const data = { "nodes": [{ "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CA", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CB", "0x679320A64036b710371374aEdfa59Cff5c16f1CC"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CB", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CA", "0x679320A64036b710371374aEdfa59Cff5c16f1CC"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CC", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CA", "0x679320A64036b710371374aEdfa59Cff5c16f1CB"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CD", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CE", "0x679320A64036b710371374aEdfa59Cff5c16f1CF"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CE", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CA", "0x679320A64036b710371374aEdfa59Cff5c16f1CC"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CF", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CH", "0x679320A64036b710371374aEdfa59Cff5c16f1CB"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CG", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CE", "0x679320A64036b710371374aEdfa59Cff5c16f1CB"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CH", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CI", "0x679320A64036b710371374aEdfa59Cff5c16f1CC"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CI", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CA", "0x679320A64036b710371374aEdfa59Cff5c16f1CJ"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CJ", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CB", "0x679320A64036b710371374aEdfa59Cff5c16f1CC"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CK", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CJ", "0x679320A64036b710371374aEdfa59Cff5c16f1CC"], "is_alive": true }, { "node_id": "0x679320A64036b710371374aEdfa59Cff5c16f1CL", "neighbor_nodes": ["0x679320A64036b710371374aEdfa59Cff5c16f1CA", "0x679320A64036b710371374aEdfa59Cff5c16f1CL"], "is_alive": true }], "total_node_count": 12, "total_message_count": 18 };
+
+
+    const svg = d3.select("#svg");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const nodeInfo = d3.select("#node-info");
+
+    const simulation = d3.forceSimulation(data.nodes)
+      .force("link", d3.forceLink().links(getLinks(data.nodes)).id(d => d.node_id).distance(100))
+      .force("charge", d3.forceManyBody().strength(-200))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collision", d3.forceCollide().radius(20))
+      .on("tick", () => {
+        link.attr("d", d => {
+          return `M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}`;
+        });
+        node.attr("cx", d => d.x)
+          .attr("cy", d => d.y);
+        text.attr("x", d => d.x)
+          .attr("y", d => d.y);
+      });
+
+    const link = svg.selectAll(".link")
+      .data(getLinks(data.nodes))
+      .enter().append("path")
+      .attr("class", "link");
+
+    const node = svg.selectAll(".node")
+      .data(data.nodes)
+      .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 28) // 节点的圆圈大小
+      .on("click", showNodeInfo)
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
+
+    const text = svg.selectAll(".node-label")
+      .data(data.nodes)
+      .enter().append("text")
+      .attr("class", "node-label")
+      .text(d => d.node_id.substr(-6))
+      .attr("dx", 40) // 在节点右侧偏移20个像素
+      .attr("dy", 20); // 在节点下方偏移5个像素
+
+    // 根据节点数据生成连接数据
+    function getLinks(nodes) {
+      const links = [];
+      nodes.forEach(node => {
+        node.neighbor_nodes.forEach(neighbor => {
+          links.push({ source: node, target: getNodeById(neighbor, nodes) });
+        });
+      });
+      return links;
+    }
+
+    // 根据节点ID查找节点对象
+    function getNodeById(id, nodes) {
+      return nodes.find(node => node.node_id === id);
+    }
+
+    // 显示节点信息
+    function showNodeInfo(event, d) {
+      nodeInfo.text("Node ID: " + d.node_id);
+    }
+
+    // 根据屏幕尺寸调整SVG大小
+    svg.attr("width", width)
+      .attr("height", height);
+
+    // 拖动节点交互
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+  </script>
+</body>
+
+</html>
