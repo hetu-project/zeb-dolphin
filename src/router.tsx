@@ -20,11 +20,11 @@ const router = createBrowserRouter([
         element: <Ai />,
       },
       {
-        path: "/node",
+        path: "/node/:node_id",
         element: <Node />,
       },
       {
-        path: "/msg",
+        path: "/message/:msg_id",
         element: <Msg />,
       },
     ],

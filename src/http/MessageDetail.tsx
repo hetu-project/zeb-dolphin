@@ -1,48 +1,32 @@
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
 
-const MessageDetail = () => {
-  const [nodeList, setNodeList] = useState<any>(null);
+const useMessageDetail = (msg_id: string | undefined) => {
+  const [msgDetail, setMsgDetail] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchNodeList = async () => {
-      try {
-        const response = await fetch('data.json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+    if (msg_id) {
+      setIsLoading(true);
+      const fetchNodeList = async () => {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_URL}message/${msg_id}`);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const jsonData = await response.json();
+          setMsgDetail(jsonData);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setIsLoading(false);
         }
-        const jsonData = await response.json();
-        setNodeList(jsonData?.messagedetail);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+      };
 
-    fetchNodeList();
-  }, []);
+      fetchNodeList();
+    }
+  }, [msg_id]);
 
-  return (
-    <div className="overflow-x-auto">
-      <table className="table table-xs">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Node Id</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {nodeList?.nodes?.map((item: any, index: any) => (
-            <tr>
-              <th>{index}</th>
-              <td><Link to="/node">{item.node_id}</Link></td>
-              <td>{item.is_alive ? "live":"pending"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  return { msgDetail, isLoading };
 };
 
-export default MessageDetail;
+export default useMessageDetail;
