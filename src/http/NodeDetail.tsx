@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
-const NodeDetail = () => {
+const NodeDetail = ({ node_id }: { node_id: string | undefined }) => {
   const [messageList, setMessageList] = useState<any>(null);
 
   useEffect(() => {
     const fetchNodeList = async () => {
       try {
-        const response = await fetch('data.json');
+        const response = await fetch(`${import.meta.env.VITE_URL}node/${node_id}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const jsonData = await response.json();
-        setMessageList(jsonData?.nodedetail1);
+        setMessageList(jsonData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -34,9 +34,9 @@ const NodeDetail = () => {
         </thead>
         <tbody>
           {messageList?.message_list?.map((item: any, index: any) => (
-            <tr>
+            <tr key={index}>
               <th>{index}</th>
-              <td><Link to="/msg">{item.message_id}</Link></td>
+              <td><Link to={`/message/${item.message_id}`}>{item.message_id}</Link></td>
               <td>{item.from_addr}</td>
               <td>{item.to_addr}</td>
             </tr>

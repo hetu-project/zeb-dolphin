@@ -7,12 +7,12 @@ const NodeList = () => {
   useEffect(() => {
     const fetchNodeList = async () => {
       try {
-        const response = await fetch('data.json');
+        const response = await fetch(`${import.meta.env.VITE_URL}overview`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const jsonData = await response.json();
-        setNodeList(jsonData?.nodelist);
+        setNodeList(jsonData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -33,9 +33,9 @@ const NodeList = () => {
         </thead>
         <tbody>
           {nodeList?.nodes?.map((item: any, index: any) => (
-            <tr>
+            <tr key={index}>
               <th>{index}</th>
-              <td><Link to="/node">{item.node_id}</Link></td>
+              <td><Link to={`/node/${item.node_id}`}>{item.node_id}</Link></td>
               <td>{item.is_alive ? "live":"pending"}</td>
             </tr>
           ))}

@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/gateway/",
+      "destination": "http://52.221.181.98:8080/gateway/"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }

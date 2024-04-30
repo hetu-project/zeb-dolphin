@@ -1,8 +1,23 @@
 import GraphMap from "./sections/GraphMap";
 import NodeList from "../../http/NodeList"
-
+import P2PNetworkTopology from "./sections/NodeGraph";
+import useNodeList from '../../http/useNodeList';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
+
+  const { nodeList } = useNodeList();
+  // const [data, setData] = useState<any[]>([]);
+
+  // useEffect(() => {
+  //   console.log(nodeList)
+  //   setData(nodeList?.nodes)
+  // }, [nodeList])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className='w-full flex justify-center'>
       <div className='max-w-5xl w-full flex flex-col'>
@@ -34,15 +49,15 @@ function Home() {
         </div>
         <div className='flex gap-4 items-center justify-between border-2 m-2 rounded-md stats shadow'>
           <div className="stat place-items-center">
-            <div className="stat-title">Downloads</div>
-            <div className="stat-value">31K</div>
-            <div className="stat-desc">From January 1st to February 1st</div>
+            <div className="stat-title">Total</div>
+            <div className="stat-value">{nodeList?.total_node_count}</div>
+            <div className="stat-desc">Nodes</div>
           </div>
 
           <div className="stat place-items-center">
-            <div className="stat-title">Users</div>
-            <div className="stat-value text-secondary">4,200</div>
-            <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
+            <div className="stat-title">Total</div>
+            <div className="stat-value text-secondary">{nodeList?.total_message_count}</div>
+            <div className="stat-desc text-secondary">Message ↗︎ 40 (2%)</div>
           </div>
 
           <div className="stat place-items-center">
@@ -64,7 +79,8 @@ function Home() {
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md'>
           {/* <MessageGraph></MessageGraph> */}
-          <GraphMap></GraphMap>
+          {/* <GraphMap></GraphMap> */}
+          <P2PNetworkTopology></P2PNetworkTopology>
         </div>
 
         <div className="text-sm breadcrumb mt-6">
@@ -78,7 +94,27 @@ function Home() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
-          <NodeList />
+          {/* <NodeList /> */}
+          <div className="overflow-x-auto">
+            <table className="table table-xs">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Node Id</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {nodeList?.nodes?.map((item: any, index: any) => (
+                  <tr key={index}>
+                    <th>{index}</th>
+                    <td><Link to={`/node/${item.node_id}`}>{item.node_id}</Link></td>
+                    <td>{item.is_alive ? "live" : "pending"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
