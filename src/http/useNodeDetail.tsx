@@ -9,7 +9,7 @@ const useNodeDetail = (node_id: string | undefined) => {
       setIsLoading(true);
       const fetchNodeDetail = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_URL}node/${node_id}`);
+          const response = await fetch(`/gateway/node/${node_id}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
