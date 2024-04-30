@@ -1,9 +1,17 @@
 // import NodeList from "./sections/NodeList";
+import { useEffect } from "react";
 import NodeDetail from "../../http/NodeDetail"
 import { useParams } from "react-router-dom";
+import useNodeDetail from "@/http/useNodeDetail";
 
 export default function Node() {
   const { node_id } = useParams();
+
+  const { nodeDetail } = useNodeDetail(node_id);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className='w-full flex justify-center'>
@@ -20,6 +28,7 @@ export default function Node() {
           </ul>
         </div>
         <div className='flex items-center justify-between border-2 m-2 h-20 rounded-md'>
+          node_id: {nodeDetail?.node_id}
         </div>
 
         <div className="text-sm breadcrumb mt-6">
@@ -33,6 +42,7 @@ export default function Node() {
           </ul>
         </div>
         <div className='flex items-center justify-between border-2 m-2 h-40 rounded-md'>
+          {JSON.stringify(nodeDetail?.clock)}
         </div>
 
 
