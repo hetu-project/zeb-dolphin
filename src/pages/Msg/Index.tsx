@@ -1,7 +1,26 @@
-import NodeList from "./sections/NodeList";
+// import NodeList from "./sections/NodeList";
 import MessageGraph from "./sections/MessageGraph";
+import { useParams } from "react-router-dom";
+// import MessageDetail from "../../http/MessageDetail";
+import useMessageDetail from '../../http/MessageDetail';
+import { useEffect } from "react";
+
 
 export default function Msg() {
+
+  const { msg_id } = useParams();
+
+  const { msgDetail } = useMessageDetail(msg_id);
+  console.log(msgDetail)
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className='w-full flex justify-center'>
       <div className='max-w-5xl w-full flex flex-col'>
@@ -16,7 +35,13 @@ export default function Msg() {
             </li>
           </ul>
         </div>
-        <div className='flex items-center justify-between border-2 m-2 h-20 rounded-md'>
+        <div className='flex items-center justify-between border-2 m-2 h-50'>
+          message_id: {msgDetail?.message_id}<br />
+          from_addr: {msgDetail?.from_addr}<br />
+          event_count: {msgDetail?.event_count}<br />
+          raw_message: {msgDetail?.raw_message}<br />
+          signature: {msgDetail?.signature}<br />
+          to_addr: {msgDetail?.to_addr}<br />
         </div>
 
         <div className="text-sm breadcrumb mt-6">
@@ -44,7 +69,7 @@ export default function Msg() {
           </ul>
         </div>
         <div className='flex items-center justify-between border-2 m-2 h-40 rounded-md'>
-
+          {JSON.stringify(msgDetail?.clock)}
         </div>
 
 
@@ -59,7 +84,7 @@ export default function Msg() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
-          <NodeList></NodeList>
+          {/* <NodeList}></NodeList> */}
         </div>
       </div>
     </div>
