@@ -1,25 +1,27 @@
 // import NodeList from "./sections/NodeList";
-import MessageGraph from "./sections/MessageGraph";
+import { rawdata_decode } from "./sections/util";
 import { useParams } from "react-router-dom";
-// import MessageDetail from "../../http/MessageDetail";
 import useMessageDetail from '../../http/MessageDetail';
-import { useEffect } from "react";
+import useMergeLog from '../../http/useMergeLog';
+import { useEffect, useState } from "react";
 
 
 export default function Msg() {
-
   const { msg_id } = useParams();
-
   const { msgDetail } = useMessageDetail(msg_id);
-  console.log(msgDetail)
+  const { mergelogs } = useMergeLog(msg_id);
+  const [messageData, setMessageData] = useState<any>(null);
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {
+    if (!msgDetail) return
+    const sss = rawdata_decode(msgDetail?.message_data)
+    console.log(sss)
+    setMessageData(sss)
+  }, [msgDetail]);
 
   return (
     <div className='w-full flex justify-center'>
@@ -39,8 +41,8 @@ export default function Msg() {
           message_id: {msgDetail?.message_id}<br />
           from_addr: {msgDetail?.from_addr}<br />
           event_count: {msgDetail?.event_count}<br />
-          raw_message: {msgDetail?.raw_message}<br />
-          signature: {msgDetail?.signature}<br />
+          message_data: {messageData}<br />
+          message_type: {msgDetail?.message_type}<br />
           to_addr: {msgDetail?.to_addr}<br />
         </div>
 
@@ -50,12 +52,13 @@ export default function Msg() {
               <span className="inline-flex gap-2 items-center">
                 <svg fill="none" viewBox="0 0 24 24" className="w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
               </span>
-              VLC Map
+              Clock
             </li>
           </ul>
         </div>
         <div className='flex items-center justify-between border-2 m-2 rounded-md'>
-          <MessageGraph></MessageGraph>
+          {/* <MessageGraph></MessageGraph> */}
+          {msgDetail?.clock_json_str_list}
         </div>
 
         <div className="text-sm breadcrumb mt-6">
@@ -63,13 +66,13 @@ export default function Msg() {
             <li>
               <span className="inline-flex gap-2 items-center">
                 <svg fill="none" viewBox="0 0 24 24" className="w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                Merge Log & Clock Info
+                Merge Log
               </span>
             </li>
           </ul>
         </div>
         <div className='flex items-center justify-between border-2 m-2 h-40 rounded-md'>
-          {JSON.stringify(msgDetail?.clock)}
+          {JSON.stringify(mergelogs)}
         </div>
 
 

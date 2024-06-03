@@ -1,19 +1,12 @@
-import GraphMap from "./sections/GraphMap";
-import NodeList from "../../http/NodeList"
 import P2PNetworkTopology from "./sections/NodeGraph";
 import useNodeList from '../../http/useNodeList';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Home() {
 
   const { nodeList } = useNodeList();
-  // const [data, setData] = useState<any[]>([]);
 
-  // useEffect(() => {
-  //   console.log(nodeList)
-  //   setData(nodeList?.nodes)
-  // }, [nodeList])
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -32,8 +25,8 @@ function Home() {
           </ul>
         </div>
         <div role="tablist" className="tabs tabs-boxed ">
-          <a role="tab" className="tab  tab-active">Base chain</a>
-          <a role="tab" className="tab">Ai chain</a>
+          <a role="tab" className="tab  tab-active">Hpoints</a>
+          <a role="tab" className="tab">Aos</a>
           <a role="tab" className="tab">....</a>
           <a role="tab" className="tab">Other chain</a>
         </div>
@@ -78,9 +71,7 @@ function Home() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md'>
-          {/* <MessageGraph></MessageGraph> */}
-          {/* <GraphMap></GraphMap> */}
-          <P2PNetworkTopology></P2PNetworkTopology>
+          <P2PNetworkTopology nodeList={nodeList}></P2PNetworkTopology>
         </div>
 
         <div className="text-sm breadcrumb mt-6">
@@ -94,7 +85,6 @@ function Home() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
-          {/* <NodeList /> */}
           <div className="overflow-x-auto">
             <table className="table table-xs">
               <thead>
