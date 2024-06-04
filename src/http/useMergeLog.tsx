@@ -9,7 +9,7 @@ const useMergeLog = (msg_id: string | undefined) => {
       setIsLoading(true);
       const fetchNodeList = async () => {
         try {
-          const response = await fetch(`${import.meta.env.VITE_URL}merge_log_by_message_id/${msg_id}`);
+          const response = await fetch(`/gateway/merge_log_by_message_id/${msg_id}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
