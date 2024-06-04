@@ -7,7 +7,7 @@ const NodeList = () => {
   useEffect(() => {
     const fetchNodeList = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_URL}overview`);
+        const response = await fetch(`/gateway/overview`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

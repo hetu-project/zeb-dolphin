@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 
-const useMessageDetail = (msg_id: string | undefined) => {
-  const [msgDetail, setMsgDetail] = useState<any>(null);
+const useNodeDetail = (node_id: string | undefined) => {
+  const [nodeDetail, setNodeDetail] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (msg_id) {
+    if (node_id) {
       setIsLoading(true);
-      const fetchNodeList = async () => {
+      const fetchNodeDetail = async () => {
         try {
-          const response = await fetch(`/gateway/message/${msg_id}`);
+          const response = await fetch(`/gateway/node/${node_id}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
           const jsonData = await response.json();
-          setMsgDetail(jsonData);
+          setNodeDetail(jsonData);
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
@@ -22,11 +22,11 @@ const useMessageDetail = (msg_id: string | undefined) => {
         }
       };
 
-      fetchNodeList();
+      fetchNodeDetail();
     }
-  }, [msg_id]);
+  }, [node_id]);
 
-  return { msgDetail, isLoading };
+  return { nodeDetail, isLoading };
 };
 
-export default useMessageDetail;
+export default useNodeDetail;
