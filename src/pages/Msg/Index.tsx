@@ -1,5 +1,5 @@
 // import NodeList from "./sections/NodeList";
-import { rawdata_decode } from "./sections/util";
+import { rawdata_decode, json_decode } from "./sections/util";
 import { useParams } from "react-router-dom";
 import useMessageDetail from '../../http/MessageDetail';
 import useMergeLog from '../../http/useMergeLog';
@@ -37,7 +37,7 @@ export default function Msg() {
             </li>
           </ul>
         </div>
-        <div className='flex items-center justify-between border-2 m-2 h-50'>
+        <div className='flex items-center justify-between border-2 m-2 h-50 overflow-x-auto'>
           message_id: {msgDetail?.message_id}<br />
           from_addr: {msgDetail?.from_addr}<br />
           event_count: {msgDetail?.event_count}<br />
@@ -56,9 +56,30 @@ export default function Msg() {
             </li>
           </ul>
         </div>
-        <div className='flex items-center justify-between border-2 m-2 rounded-md'>
-          {/* <MessageGraph></MessageGraph> */}
-          {msgDetail?.clock_json_str_list}
+        {/* <MessageGraph></MessageGraph> */}
+        <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
+          <div className="overflow-x-auto">
+            <table className="table table-xs">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Node Id</th>
+                  <th>ClockHash</th>
+                  <th>Clock</th>
+                </tr>
+              </thead>
+              <tbody>
+                {msgDetail?.clock_json_str_list && json_decode(msgDetail?.clock_json_str_list).map((item: any, index: any) => (
+                  <tr key={index}>
+                    <th>{index}</th>
+                    <td>{item.NodeId}</td>
+                    <td>{item.ClockHash}</td>
+                    <td>{JSON.stringify(item.Clock)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className="text-sm breadcrumb mt-6">
@@ -71,10 +92,9 @@ export default function Msg() {
             </li>
           </ul>
         </div>
-        <div className='flex items-center justify-between border-2 m-2 h-40 rounded-md'>
+        <div className='flex items-center justify-between border-2 m-2 h-40 rounded-md overflow-x-auto'>
           {JSON.stringify(mergelogs)}
         </div>
-
 
         <div className="text-sm breadcrumb mt-6">
           <ul>
