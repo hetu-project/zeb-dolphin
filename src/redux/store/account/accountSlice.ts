@@ -28,6 +28,7 @@ export interface Network {
   ws: string;
   agent: string;
   name: string;
+  rpc: string;
 }
 
 interface AccountsState {
