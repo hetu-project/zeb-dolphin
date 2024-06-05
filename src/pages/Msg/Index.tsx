@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import useMessageDetail from '../../http/MessageDetail';
 import useMergeLog from '../../http/useMergeLog';
 import { useEffect, useState } from "react";
-
+import MergeGraph from "./sections/MergeGraph";
 
 export default function Msg() {
   const { msg_id } = useParams();
@@ -92,11 +92,12 @@ export default function Msg() {
             </li>
           </ul>
         </div>
-        <div className='flex items-center justify-between border-2 m-2 h-40 rounded-md overflow-x-auto'>
-          {JSON.stringify(mergelogs)}
+        <div className='flex items-center justify-between border-2 m-2 rounded-md overflow-x-auto'>
+          {/* {JSON.stringify(mergelogs)} */}
+          <MergeGraph data={mergelogs}></MergeGraph>
         </div>
 
-        <div className="text-sm breadcrumb mt-6">
+        {/* <div className="text-sm breadcrumb mt-6">
           <ul>
             <li>
               <span className="inline-flex gap-2 items-center">
@@ -107,8 +108,8 @@ export default function Msg() {
           </ul>
         </div>
         <div className='flex items-center justify-center border-2 m-2 rounded-md mb-10'>
-          {/* <NodeList}></NodeList> */}
-        </div>
+          
+        </div> */}
       </div>
     </div>
   )
