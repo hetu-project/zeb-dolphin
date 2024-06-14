@@ -1,5 +1,12 @@
-const encoder = new TextEncoder();
+import { bytesToHex, hexToBytes, 
+  // utf8ToBytes 
+} from '@noble/hashes/utils';
+export const hexToU8a = hexToBytes;
+// export const stringToU8a = utf8ToBytes;
+export const u8aToHex = bytesToHex;
+
 const decoder = new TextDecoder('utf-8');
+const encoder = new TextEncoder();
 export type AnyString = string;
 
 export function isU8a (value?: unknown): value is Uint8Array {

@@ -1,6 +1,8 @@
 import { useAppDispatch } from "@/redux/hooks";
 import { useAccount } from "@/redux/hooks/accounts";
 import { accountActions } from "@/redux/store/account/accountSlice";
+import { useClipboard, useToast } from "@chakra-ui/react";
+import { ClipboardDocumentIcon } from "@heroicons/react/24/solid";
 import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,6 +13,8 @@ function Header() {
     dispatch(accountActions.removeAccount(account?.address))
   }, [account?.address, dispatch]);
   const navigate = useNavigate();
+  const { onCopy } = useClipboard(account?.address);
+  const toast = useToast();
   return (
     <div className="navbar w-full bg-base-100 shadow-md">
       <div className="navbar-start">
@@ -63,10 +67,31 @@ function Header() {
           }}
           >
             <div className="w-10 rounded-full">
-              <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
           </div>
           {account ? <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li>
+              <div className="truncate">
+                <a>address:</a>
+                <span className=" truncate">
+                  {account.address}
+                </span>
+                <span onClick={() => {
+                  onCopy();
+                  toast({
+                    position: 'top',
+                    title: 'Copy Success',
+                    status: 'success',
+                    duration: 1900,
+                    // isClosable: true,
+                  });
+                }}>
+                    <ClipboardDocumentIcon className="w-3 h-3 cursor-pointer" />
+                </span>
+                
+              </div>
+            </li>
             <li>
               <a className="justify-between">
                 Profile

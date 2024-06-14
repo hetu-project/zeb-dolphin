@@ -6,10 +6,9 @@ import { PaperAirplaneIcon, TicketIcon } from '@heroicons/react/24/solid';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 import { messageStorageSortKey } from '@/utils/account';
-import ChatApi from '@/client/chat/ChatApi';
-import { ZMessage } from '@/proto/zmessage';
 import { ChatMessage } from '@/proto/ChatMessage';
-import { stringToU8a, u8aToString } from '@/utils';
+import { stringToU8a, u8aToHex, u8aToString } from '@/utils';
+import { BackendChat } from '@/client/chat/BackendChat';
 
 export interface MessageCardProps {
   position: 'left' | 'right';
@@ -84,30 +83,50 @@ interface Inputs {
 export function Message() {
   const {register, getValues, setValue } = useForm<Inputs>();
 
-  const [chatApi, setChatApi] = useState<ChatApi>();
-  const network = useActiveNetwork();
+  const [backendApi, setBackendApi] = useState<BackendChat>();
 
   useEffect(() => {
-    if(network) {
-      const chatApi = ChatApi.create({
-        url: [network.ws]
-      })
-      setChatApi(chatApi);
-    }
-    return () => {
-    }
+    setBackendApi(new BackendChat());
+  }, [])
+  const network = useActiveNetwork();
 
-  }, [network]);
+  // useEffect(() => {
+  //   if(network) {
+  //     ChatApi.create({
+  //       seedRpc: network.rpc
+  //     }).then((chatApi) =>{
+  //       setChatApi(chatApi);
+  //     })
+
+  //   }
+  //   return () => {
+  //     // setChatApi(undefined)
+  //   }
+
+  // }, [network]);
 
   const account = useAccount();
   const dispatch = useAppDispatch();
   const contact = useActiveContact();
 
+  useEffect(() => {
+    if(!account || !network || !backendApi) {
+      return
+    }
+    // console.log('switchSeedRpc', network);
+    backendApi.switchSeedRpc(network.rpc, account.address);
+    return () => {
+      backendApi.disconnect();
+    }
+    
+  }, [account, backendApi, network])
+
   const messageList= useMessagesList(account?.address, contact?.address || '');
-  const handleReceiveMessage = useCallback((message: ZMessage) => {
-    const chatMessage = ChatMessage.decode(message.data);
-    const from = u8aToString(chatMessage.from);
-    const to = u8aToString(chatMessage.to);
+  const handleReceiveMessage = useCallback((message: ChatMessage) => {
+    // console.log('handleReceiveMessage', message);
+    const chatMessage = message;
+    const from = u8aToHex(chatMessage.from);
+    const to = u8aToHex(chatMessage.to);
     const key = messageStorageSortKey(from, to);
 
     const textMessage = u8aToString(chatMessage.data);
@@ -117,6 +136,9 @@ export function Message() {
       message: textMessage,
       sign: '',
     };
+
+    // console.log('handleReceiveMessage', receiveMessage);
+
     dispatch(accountActions.addMessage({
       key,
       message: receiveMessage
@@ -124,20 +146,16 @@ export function Message() {
   }, [dispatch]);
 
   useEffect(() => {
-    if(!chatApi) {
+    if(!backendApi) {
       return
     }
-    chatApi.isReady.then(() => {
-      chatApi.subscribeReceiveMessage(handleReceiveMessage)
-    })
+    backendApi.subscribeMessage(handleReceiveMessage)
 
     return () => {
-      chatApi.isReady.then(() => {
-        chatApi.unsubscribeReceiveMessage(handleReceiveMessage);
-      })
+      // backendApi.disconnect();
     }
 
-  }, [chatApi, handleReceiveMessage]);
+  }, [backendApi, handleReceiveMessage]);
 
   const handleSend = useCallback(async () => {
     console.log('handleSend');
@@ -155,12 +173,12 @@ export function Message() {
       sign: '',
     };
     // const signature = await signChatMessage(account, mf.message);
-    chatApi?.sendMessage(mf.from, mf.to, mf.message, network?.agent || mf.to, stringToU8a(''))
+    backendApi?.sendMessage(mf.from, mf.to, mf.message,'','', stringToU8a(''))
     dispatch(accountActions.addMessage({
       key: '',
       message: mf
     }))
-  }, [account, chatApi, contact, dispatch, getValues, network?.agent, setValue]);
+  }, [account, backendApi, contact, dispatch, getValues, setValue]);
   const handleKeyUp = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.code === 'Enter') {

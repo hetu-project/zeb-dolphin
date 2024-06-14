@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 interface Inputs {
   name: string;
   agent: string;
-  address: string;
+  rpc: string;
 }
 
 export function Network() {
@@ -32,13 +32,14 @@ export function Network() {
   const dispatch = useAppDispatch();
   const handleAddContact = useCallback(() => {
     const name = getValues('name');
-    const agent = getValues('agent');
-    const address = getValues('address');
+    // const agent = getValues('agent');
+    const address = getValues('rpc');
 
     dispatch(accountActions.addNetwork({
       name,
-      agent,
-      ws: address,
+      agent: '',
+      ws: '',
+      rpc: address,
     }))
     onClose();
     reset();
@@ -124,7 +125,7 @@ export function Network() {
                           className="input input-primary w-full resize-none"
                           {...register('name')}></input>
                       </div>
-                      <div className='mt-4'>
+                      {/* <div className='mt-4'>
                         <div className='mb-2'>
                           Agent:
                         </div>
@@ -132,15 +133,15 @@ export function Network() {
                           placeholder=""
                           className="input input-primary w-full resize-none"
                           {...register('agent')}></input>
-                      </div>
+                      </div> */}
                       <div className='mt-4'>
                         <div className='mb-2'>
-                          Url:
+                          Rpc:
                         </div>
                         <input
                           placeholder=""
                           className="input input-primary w-full resize-none"
-                          {...register('address')}></input>
+                          {...register('rpc')}></input>
                       </div>
                     </div>
                     <div className='flex items-center justify-center my-6'>
