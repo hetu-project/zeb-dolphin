@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const useMessageDetail = (msg_id: string | undefined) => {
-  const [msgDetail, setMsgDetail] = useState<any>(null);
+const useMergeLog = (msg_id: string | undefined) => {
+  const [mergelogs, setMergelogs] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -9,12 +9,12 @@ const useMessageDetail = (msg_id: string | undefined) => {
       setIsLoading(true);
       const fetchNodeList = async () => {
         try {
-          const response = await fetch(`/gateway/message/${msg_id}`);
+          const response = await fetch(`/gateway/merge_log_by_message_id/${msg_id}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
           const jsonData = await response.json();
-          setMsgDetail(jsonData);
+          setMergelogs(jsonData);
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
@@ -26,7 +26,7 @@ const useMessageDetail = (msg_id: string | undefined) => {
     }
   }, [msg_id]);
 
-  return { msgDetail, isLoading };
+  return { mergelogs, isLoading };
 };
 
-export default useMessageDetail;
+export default useMergeLog;

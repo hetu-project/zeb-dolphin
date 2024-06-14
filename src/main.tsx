@@ -13,6 +13,7 @@ const extendTheme = extendBaseTheme({
   components: {
     Modal: theme.components.Modal,
     Tabs: theme.components.Tabs,
+    Alert: theme.components.Alert,
   },
 });
 
